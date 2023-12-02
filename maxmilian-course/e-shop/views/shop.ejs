@@ -1,0 +1,16 @@
+
+<%- include('./includes/headder.ejs')%>
+</head>
+  <body>
+<%- include('./includes/nav.ejs')%>
+<% if (products.length > 0) { %>
+ <ol>
+  <% for (prod of products){ %>
+  <li class ="products"> <%=prod %></li>
+  <%}%>
+</ol>
+<%} else{ %>
+        <h1>no products yet</h1>
+   <% }%>
+
+   <%include('./includes/footer.ejs')%>
