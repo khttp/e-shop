@@ -4,6 +4,7 @@ const productController = require("../controllers/products");
 
 adminRouter
   .get("/add-product", productController.getAddProduct)
+  .get("/product/:prodId", productController.productDetails)
   .post("/add-product", productController.postAddProduct);
 
 module.exports = adminRouter;

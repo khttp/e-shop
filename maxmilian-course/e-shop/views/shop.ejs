@@ -5,7 +5,9 @@
 <% if (products.length > 0) { %>
  <ol>
   <% products.forEach((prod)=>{ %>
-  <li class ="products"> <%=prod.title %></li>
+  <li class ="products">
+    <a href="/product/<%=prod.title%>"><%=prod.title%></a>
+  </li>
   <%})%>
 </ol>
 <%} else{ %>

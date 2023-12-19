@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + "/" + "public"));
 app.use(shopRoutes);
 app.use(adminRoutes);
-
 app.use(errControllers.errPage);
 
 app.listen(3000, () => {
