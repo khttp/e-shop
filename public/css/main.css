@@ -1,0 +1,51 @@
+nav {
+  color: green;
+  font-size: 2rem;
+  display: inline-flex;
+}
+
+button {
+  color: red;
+  font-size: 1rem;
+  display: gred;
+  margin: auto;
+  padding: auto;
+
+}
+
+.input {
+  margin: 4px;
+  padding: 4px;
+  display: grid;
+}
+
+input {
+  color: red;
+  font-size: 2rem;
+  display: center;
+  margin: auto;
+  padding: auto;
+
+}
+
+li {
+  float: left;
+  padding: auto 2rem;
+  margin: auto 2rem;
+}
+
+.products {
+  color: green;
+
+  font-size: 1.8rem;
+}
+
+.text {
+  color: yellow;
+  font-size: 4rem;
+}
+
+.link {
+  color: red;
+  font-size: 2rem;
+}
