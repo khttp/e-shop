@@ -1,0 +1,14 @@
+<%-include('./includes/headder.ejs')%>
+</head>
+  <body>
+  <%- include('./includes/nav.ejs')%>
+ <form action ="/add-product" method = "POST">
+   <div class="input"> title  <input  type="text" name="title" ></div> <br>
+   <div class="input"> price <input  type="number" name="price" ></div><br> 
+   <div class="input"> description <input  type="text" name="description" ></div><br> 
+    
+    <button type="submit">send now</button>
+  
+ </form>
+  
+ <%- include('./includes/footer.ejs')%>
