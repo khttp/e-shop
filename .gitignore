@@ -1,2 +1,7 @@
-node_modules/
-package_lock.json 
+mongo/node_modules/
+mongo/package_lock.json 
+mongo/.env
+mongo/yarn.lock
+sql/node_modules/
+sql/package-lock.json
+
