@@ -31,7 +31,7 @@ exports.deleteProduct = async (req, res) => {
 }
 
 exports.updateProduct = async (req, res) => {
-  const update = {
+  const updateProd = {
     name: req.body.name,
     price: req.body.price,
     imgurl: req.body.imgurl,
@@ -39,12 +39,12 @@ exports.updateProduct = async (req, res) => {
     description: req.body.description
   }
   try {
-    const fetchprod = await Product.findOneAndUpdate(
-      { id: { $eq: req.params.prodId } }, update)
-    if (fetchprod.length === 0) {
+    const updatedProd = await Product.findOneAndUpdate(
+      { id: { $eq: req.params.prodId } }, updateProd)
+    if (updatedProd.length === 0) {
       return res.json({ message: "product not found " })
     }
-    res.json({ message: `Product with id ${fetchprod.id} updated successfully` });
+    res.json({ message: `Product with id ${updatedProd.id} updated successfully` });
   } catch (err) {
     console.error(err)
   }

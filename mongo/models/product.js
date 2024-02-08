@@ -18,6 +18,15 @@ const productSchema = new mongoose.Schema({
     type: String,
     default: "No description available"
   },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true
+  },
+  dateCreated: {
+    type: Date,
+    default: Date.now
+  },
   noinstock: {
     type: Number,
     required: true

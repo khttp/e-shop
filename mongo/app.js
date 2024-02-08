@@ -1,3 +1,5 @@
+// require modules 
+
 const express = require("express");
 const { urlencoded, json } = require("body-parser");
 require("dotenv/config");
@@ -12,13 +14,15 @@ app.use(morgan('tiny'));
 
 //routes
 const adminRoutes = require("./routes/product");
+const categoryRoutes = require("./routes/category");
 
-app.use(adminRoutes);
+app.use('/products', adminRoutes);
+app.use('/categories', categoryRoutes);
 
 
 //connect to database
 mongoose.connect(
-  process.env.DB_CONNECTION
+  process.env.DBCONN
   , { dbName: 'eshop' }
 )
   .then(() => console.log("Connected to MongoDB"))
