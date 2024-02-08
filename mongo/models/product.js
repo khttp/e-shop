@@ -5,7 +5,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     autoIncrement: true,
   },
-  name: String,
+  name: {
+    type: String,
+    required: true,
+  },
   price: {
     type: Number,
     required: true,
