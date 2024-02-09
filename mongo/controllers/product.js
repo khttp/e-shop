@@ -1,5 +1,6 @@
 const { Product } = require("../models/product");
 const { Category } = require("../models/category");
+const mongoose = require('mongoose');
 
 exports.addProduct = async (req, res) => {
   try {
@@ -93,21 +94,31 @@ exports.productDetails = async (req, res) => {
   }
 }
 
-exports.getCount = async (req, res) => {
-  const productCount = await Product.countDocuments({});
-  if (!productCount) {
-    return res.status(500).json({ message: 'server error' });
+exports.countDocs = async (req, res) => {
+  try {
+    const productCount = await Product.countDocuments();
+    if (!productCount) {
+      return res.status(500).json({ message: 'server error' });
+    }
+    res.status(200).json({ noOfProducts: productCount })
+  } catch (err) {
+    console.error(err)
   }
-  res.status(200).json({ noOfProducts: productCount })
 
 }
+exports.getFeaturedProducts = async (req, res) => {
+  try {
+    const featuredProducts = await Product.find({ isfeatured: { $eq: true } });
 
-exports.getFeatured = async (req, res) => {
-  const featuredProducts = await Product.find({ isfeatured: true });
+    if (!featuredProducts) {
 
-  if (!featuredProducts) {
-    res.status(500).json({ message: "server error" });
+      return res.status(500).json({ message: "server error" });
+    }
+
+    res.status(200).json(featuredProducts);
+
+  } catch (err) {
+    console.error(err)
   }
-  res.status(200).json(featuredProducts);
 }
 

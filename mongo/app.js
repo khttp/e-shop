@@ -4,7 +4,6 @@ const express = require("express");
 const { urlencoded, json } = require("body-parser");
 require("dotenv/config");
 const morgan = require('morgan');
-//const mongoconnect = require("./util/database");
 const mongoose = require("mongoose");
 const app = express();
 app.use(urlencoded({ extended: false }));
@@ -15,9 +14,11 @@ app.use(morgan('tiny'));
 //routes
 const adminRoutes = require("./routes/product");
 const categoryRoutes = require("./routes/category");
+const userRoutes = require("./routes/user");
 
 app.use('/products', adminRoutes);
 app.use('/categories', categoryRoutes);
+//app.use('/users', userRoutes);
 
 
 //connect to database
