@@ -3,6 +3,7 @@ const { Category } = require("../models/category");
 
 exports.addProduct = async (req, res) => {
   try {
+    console.log(req.body.name)
     const category = await Category.findById(req.body.category);
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
@@ -16,6 +17,7 @@ exports.addProduct = async (req, res) => {
         imgurl: req.body.imgurl,
         noinstock: req.body.noinstock,
         description: req.body.description,
+        isfeatured: req.body.isfeatured
       });
     res.json({ message: `${req.body.name} added successfully}` })
     console.log(createdProduct);
@@ -38,15 +40,24 @@ exports.deleteProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   const updateProd = {
+    id: req.body.id,
     name: req.body.name,
     price: req.body.price,
-    imgurl: req.body.imgurl,
     noinstock: req.body.noinstock,
-    description: req.body.description
+    imgurl: req.body.imgurl,
+    Category: req.body.category,
+    description: req.body.description,
+    isfeatured: req.body.isfeatured,
   }
   try {
+    if (req.body.category) {
+      const newCategory = await Category.findById(req.body.category);
+      if (!newCategory) {
+        return res.status(404).send(`category with _id ${req.body.categery} not found`)
+      }
+    }
     const updatedProd = await Product.findOneAndUpdate(
-      { id: { $eq: req.params.prodId } }, updateProd)
+      { id: { $eq: req.params.prodId } }, updateProd);
     if (updatedProd.length === 0) {
       return res.json({ message: "product not found " })
     }
@@ -57,7 +68,11 @@ exports.updateProduct = async (req, res) => {
 }
 
 exports.getAllProducts = async (req, res) => {
-  const fetchedProducts = await Product.find({})
+  let filter = {};
+  if (req.query.categories) {
+    filter = { category: req.qurey.categories.split(',') }
+  }
+  const fetchedProducts = await Product.find(filter).select('name price description').populate('category')
   try {
     if (fetchedProducts.length === 0) {
       return res.json({ message: "No products found" })
@@ -71,9 +86,28 @@ exports.getAllProducts = async (req, res) => {
 
 exports.productDetails = async (req, res) => {
   try {
-    const selectedProd = await Product.findOne({ id: { $eq: req.params.prodId } });
+    const selectedProd = await Product.findOne({ id: { $eq: req.params.prodId } }).populate('category');
     res.json(selectedProd)
   } catch (err) {
     console.error(err)
   }
 }
+
+exports.getCount = async (req, res) => {
+  const productCount = await Product.countDocuments({});
+  if (!productCount) {
+    return res.status(500).json({ message: 'server error' });
+  }
+  res.status(200).json({ noOfProducts: productCount })
+
+}
+
+exports.getFeatured = async (req, res) => {
+  const featuredProducts = await Product.find({ isfeatured: true });
+
+  if (!featuredProducts) {
+    res.status(500).json({ message: "server error" });
+  }
+  res.status(200).json(featuredProducts);
+}
+

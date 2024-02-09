@@ -33,6 +33,11 @@ const productSchema = new mongoose.Schema({
   noinstock: {
     type: Number,
     required: true
+  },
+  isfeatured: {
+    type: Boolean,
+    default: false,
+    required: true
   }
 });
 
