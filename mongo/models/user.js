@@ -10,12 +10,28 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true
   },
-  password: {
+  passwordHash: {
     type: String,
     required: true
+  },
+  phone: {
+    type: String,
+    required: true
+  },
+  address: {
+    type: String,
+    required: true,
   },
   dateCreated: {
     type: Date,
     default: Date.now
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false
   }
+
 });
+
+exports.userModel = mongoose.model('User', userSchema);

@@ -38,6 +38,11 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
     required: true
+  },
+  isshiped: {
+    type: Boolean,
+    default: false,
+    required: true
   }
 });
 

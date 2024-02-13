@@ -23,7 +23,7 @@ exports.addProduct = async (req, res) => {
     res.json({ message: `${req.body.name} added successfully}` })
     console.log(createdProduct);
   } catch (err) {
-    console.error(err);
+    return res.json({ err: err });
   }
 }
 
@@ -35,7 +35,7 @@ exports.deleteProduct = async (req, res) => {
     }
     res.json({ message: `Product with name ${delproduct.name} deleted successfully` });
   } catch (err) {
-    console.error(err);
+    return res.json({ err: err });
   }
 }
 
@@ -64,7 +64,7 @@ exports.updateProduct = async (req, res) => {
     }
     res.json({ message: `Product with id ${updatedProd.id} updated successfully` });
   } catch (err) {
-    console.error(err)
+    return res.json({ err: err });
   }
 }
 
@@ -73,24 +73,25 @@ exports.getAllProducts = async (req, res) => {
   if (req.query.categories) {
     filter = { category: req.qurey.categories.split(',') }
   }
-  const fetchedProducts = await Product.find(filter).select('name price description').populate('category')
+  const fetchedProducts = await Product.find(filter).select('id name price description').populate('category')
   try {
     if (fetchedProducts.length === 0) {
       return res.json({ message: "No products found" })
     }
     res.json(fetchedProducts)
   } catch (err) {
-    console.error(err)
+    return res.json({ err: err });
   }
 };
 
 
 exports.productDetails = async (req, res) => {
   try {
+    console.log(req.params.prodId)
     const selectedProd = await Product.findOne({ id: { $eq: req.params.prodId } }).populate('category');
     res.json(selectedProd)
   } catch (err) {
-    console.error(err)
+    return res.json({ err: err });
   }
 }
 
@@ -102,13 +103,15 @@ exports.countDocs = async (req, res) => {
     }
     res.status(200).json({ noOfProducts: productCount })
   } catch (err) {
-    console.error(err)
+    return res.json({ err: err });
   }
 
 }
 exports.getFeaturedProducts = async (req, res) => {
+
+  console.log(req.params.count);
   try {
-    const featuredProducts = await Product.find({ isfeatured: { $eq: true } });
+    const featuredProducts = await Product.find({ isfeatured: { $eq: true } }).limit(+req.params.count);
 
     if (!featuredProducts) {
 
@@ -118,7 +121,7 @@ exports.getFeaturedProducts = async (req, res) => {
     res.status(200).json(featuredProducts);
 
   } catch (err) {
-    console.error(err)
+    return res.json({ err: err });
   }
 }
 

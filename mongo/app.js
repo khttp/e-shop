@@ -1,4 +1,3 @@
-// require modules 
 
 const express = require("express");
 const { urlencoded, json } = require("body-parser");
@@ -6,10 +5,15 @@ require("dotenv/config");
 const morgan = require('morgan');
 const mongoose = require("mongoose");
 const app = express();
-app.use(urlencoded({ extended: false }));
+
+const auth = require('./helper/jwt')
+const errorHandler = require('./helper/error-handler')
+
+//middlewares
 app.use(json());
 app.use(morgan('tiny'));
-
+app.use(auth());
+app.use(errorHandler)
 
 //routes
 const adminRoutes = require("./routes/product");
@@ -18,7 +22,7 @@ const userRoutes = require("./routes/user");
 
 app.use('/products', adminRoutes);
 app.use('/categories', categoryRoutes);
-//app.use('/users', userRoutes);
+app.use('/users', userRoutes);
 
 
 //connect to database

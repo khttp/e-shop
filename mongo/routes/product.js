@@ -1,16 +1,15 @@
 const express = require("express");
-
 const adminRouter = express.Router();
 const productController = require("../controllers/product");
-
+/// order matters
 adminRouter
   .get("/", productController.getAllProducts)
-  .get("/:prodId", productController.productDetails)
+  .get("/featured/:count", productController.getFeaturedProducts)
+  .get("/countDocs", productController.countDocs)
+  .get("/details/:prodId", productController.productDetails)
   .post("/add-product", productController.addProduct)
-  .delete("/delete-product/:prodId", productController.deleteProduct)
   .patch("/update-product/:prodId", productController.updateProduct)
-  .get("/get/featured", productController.getFeaturedProducts)
-  .get("/get/countDocs", productController.countDocs)
+  .delete("/delete-product/:prodId", productController.deleteProduct)
 
 module.exports = adminRouter;
 
