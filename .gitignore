@@ -1,7 +1,7 @@
-mongo/node_modules/
-mongo/package_lock.json 
-mongo/.env
-mongo/yarn.lock
-sql/node_modules/
-sql/package-lock.json
+e-shop_with_mongoDB/node_modules/
+e-shop_with_mongoDB/package_lock.json 
+e-shop_with_mongoDB/.env
+e-shop_with_mongoDB/yarn.lock
+e-shop_with_MySQL/node_modules/
+e-shop_with_MySQL/package-lock.json
 
